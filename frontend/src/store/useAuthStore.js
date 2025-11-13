@@ -2,23 +2,23 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client"
+import { SOCKET_BASE_URL } from "../config/env";
 
-const SOCKET_BASE_URL = import.meta.env.MODE === "development" ?  "http://localhost:5000" : "/"  
-const API_BASE_URL = import.meta.env.MODE === "development" ?  "http://localhost:5000/api" : "/api" 
+
 export const useAuthStore = create((set, get) => ({
   authUser: null,
   isSigningUp: false,
   isLoggingIn: false,
   isUpdatingProfile: false,
-  onlineUsers : [],
+  onlineUsers: [],
   isCheckingAuth: true,
-  socket : null,
+  socket: null,
 
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("/auth/check");
       set({ authUser: res.data });
-       get().connectSocket()
+      get().connectSocket()
     } catch (error) {
       console.log("Error in checkAuth", error);
       set({ authUser: null });
@@ -66,51 +66,51 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  updateProfile: async (data) => { 
+  updateProfile: async (data) => {
     set({ isUpdatingProfile: true });
     try {
       const res = await axiosInstance.put("/auth/updateProfilePic", data)
       set({ authUser: res.data });
       toast.success("Profile Updated Successfully");
     } catch (error) {
-    toast.error(error.response?.data?.message || "Something went wrong");
-    }finally{
+      toast.error(error.response?.data?.message || "Something went wrong");
+    } finally {
       set({ isUpdatingProfile: false })
     }
-   },
+  },
 
-// useAuthStore.js - UPDATE connectSocket with LOUD LOGS
-connectSocket : ()=>{
-    const {authUser, socket} = get()
-    if(!authUser || socket?.connected) {
+  // useAuthStore.js - UPDATE connectSocket with LOUD LOGS
+  connectSocket: () => {
+    const { authUser, socket } = get()
+    if (!authUser || socket?.connected) {
       return;
     }
-  
+
     const socketIo = io(SOCKET_BASE_URL, {  // ← CHANGED: Use SOCKET_BASE_URL instead of BASE_URL!
-      query : {
-        userId : authUser._id
+      query: {
+        userId: authUser._id
       },
       transports: ['websocket', 'polling']
     })
-  
-    
+
+
     socketIo.on("connect", () => {
     });
 
     socketIo.on("connect_error", () => {
     });
 
-    socketIo.on("getOnlineUsers",(userIds)=>{
-      set({ onlineUsers : userIds })
+    socketIo.on("getOnlineUsers", (userIds) => {
+      set({ onlineUsers: userIds })
     });
 
-    set({ socket : socketIo })
-  
+    set({ socket: socketIo })
+
   },
-   
-  disconnectSocket : ()=>{
+
+  disconnectSocket: () => {
     const currentSocket = get().socket
-    if(currentSocket?.connected) {
+    if (currentSocket?.connected) {
       currentSocket.disconnect()
     }
     set({ socket: null })
