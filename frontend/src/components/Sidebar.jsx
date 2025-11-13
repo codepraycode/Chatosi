@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import { Users, X, Menu, Search, Circle } from "lucide-react";
-import avatar from "../../public/avatar.png";
+
 import { useAuthStore } from "../store/useAuthStore";
 
+const avatar = "/avatar.png";
 const Sidebar = () => {
   const {
     getUsers,
@@ -40,10 +41,10 @@ const Sidebar = () => {
 
     return isNotCurrentUser && matchesSearch && isOnlineOrNotFiltered;
   }).sort((a, b) => {
-      const aOnline = onlineUsers.includes(a._id) ? -1 : 1;
-      const bOnline = onlineUsers.includes(b._id) ? -1 : 1;
-      return aOnline - bOnline;
-    });
+    const aOnline = onlineUsers.includes(a._id) ? -1 : 1;
+    const bOnline = onlineUsers.includes(b._id) ? -1 : 1;
+    return aOnline - bOnline;
+  });
 
   // Mobile sidebar toggle
   const toggleMobileSidebar = () => {

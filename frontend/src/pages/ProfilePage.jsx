@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import avatar from "../../public/avatar.png";
+
 import { useAuthStore } from "../store/useAuthStore";
 import { Camera, Mail, User, Loader, X, Calendar, Shield, CheckCircle } from "lucide-react";
 import { useThemeStore } from "../store/useThemeStore";
 
+const avatar = "/avatar.png";
 const ProfilePage = () => {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
   const [selectedImage, setSelectedImage] = useState(null);
@@ -11,10 +12,10 @@ const ProfilePage = () => {
   const [hasChanges, setHasChanges] = useState(false);
 
   const { isProfileOpen: isOpen, openSettings } = useThemeStore();
-  
-    const onClose = () => {
-      openSettings(false);
-    }
+
+  const onClose = () => {
+    openSettings(false);
+  }
 
   // ESC key to close modal
   useEffect(() => {

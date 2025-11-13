@@ -4,9 +4,10 @@ import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
 import { useAuthStore } from "../store/useAuthStore";
-import avatar from "../../public/avatar.png";
 import { formatMessageTime } from "../lib/utils";
 import { CSSPattern } from "./ui/patterns/PatternBackground";
+
+const avatar = "/avatar.png";
 
 const ChatContainer = () => {
   const {
@@ -147,8 +148,8 @@ const MessageBubble = ({ message, authUser, selectedUser, avatar }) => {
           )}
 
           <div className={`chat-bubble flex flex-col break-words ${isOwnMessage
-              ? 'bg-primary text-primary-content rounded-br-md'
-              : 'bg-base-200 text-base-content rounded-bl-md'
+            ? 'bg-primary text-primary-content rounded-br-md'
+            : 'bg-base-200 text-base-content rounded-bl-md'
             } rounded-2xl px-4 py-2 shadow-sm`}>
             {message.image && (
               <img

@@ -7,8 +7,8 @@ const PatternBackground = ({ pattern = 'grid', intensity = 'light' }) => {
         const loadPattern = async () => {
             try {
                 // Dynamic import based on pattern name
-                const patternModule = await import(`../../assets/patterns/${pattern}-pattern.svg`);
-                const response = await fetch(patternModule.default);
+                // const patternModule = await import(`/assets/patterns/${pattern}-pattern.svg`);
+                const response = await fetch("/assets/patterns/${pattern}-pattern.svg");
                 const svgText = await response.text();
                 setPatternSvg(svgText);
             } catch (error) {

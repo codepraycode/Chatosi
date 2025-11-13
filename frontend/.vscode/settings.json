@@ -1,0 +1,7 @@
+{
+    "typescript.validate.enable": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "files.associations": {
+        "*.jsx": "javascriptreact"
+    }
+}

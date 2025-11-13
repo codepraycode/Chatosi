@@ -1,0 +1,91 @@
+{
+    "folders": [
+        {
+            "path": "frontend"
+        },
+        {
+            "path": "backend"
+        }
+    ],
+    "settings": {
+        // Editor & Formatting
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+        // ESLint Integration
+        "eslint.enable": true,
+        "eslint.run": "onSave",
+        "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+
+        // File exclusions (clean up explorer)
+        "files.exclude": {
+            "**/node_modules": true,
+            "**/dist": true,
+            "**/.vite": true
+        }
+    },
+
+    "extensions": {
+        "recommendations": [
+            "dbaeumer.vscode-eslint",
+            "esbenp.prettier-vscode",
+            "bradlc.vscode-tailwindcss",
+            "formulahendry.auto-close-tag",
+            "formulahendry.auto-rename-tag"
+        ]
+    },
+
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Start Frontend",
+                "type": "shell",
+                "command": "pnpm --dir frontend dev",
+                "options": {
+                    "cwd": "${workspaceRoot}"
+                },
+                "group": "build"
+            },
+            {
+                "label": "Start Backend",
+                "type": "shell",
+                "command": "pnpm --dir backend dev",
+                "options": {
+                    "cwd": "${workspaceRoot}"
+                },
+                "group": "build"
+            },
+            {
+                "label": "Install Frontend",
+                "type": "shell",
+                "command": "pnpm install",
+                "options": {
+                    "cwd": "${workspaceRoot}/frontend"
+                },
+                "group": "build"
+            },
+            {
+                "label": "Install Backend",
+                "type": "shell",
+                "command": "pnpm install",
+                "options": {
+                    "cwd": "${workspaceRoot}/backend"
+                },
+                "group": "build"
+            },
+            {
+                "label": "Start Both",
+                "dependsOn": ["Start Frontend", "Start Backend"],
+                "dependsOrder": "parallel",
+                "group": "build"
+            },
+            {
+                "label": "Install All",
+                "dependsOn": ["Install Frontend", "Install Backend"],
+                "dependsOrder": "parallel",
+                "group": "build"
+            }
+        ]
+    }
+}

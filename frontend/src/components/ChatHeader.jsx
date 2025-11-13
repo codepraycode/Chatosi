@@ -1,10 +1,12 @@
 import { X, MoreVertical, Phone, Video, Circle, Info } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
-import avatar from "../../public/avatar.png";
+
 import { useEffect, useState } from "react";
 import { useKeyboardShortcuts } from "../hooks/useShortcuts";
 import toast from "react-hot-toast";
+
+const avatar = "/avatar.png";
 
 const ChatHeader = () => {
   const { selectedUser, setSelectedUser } = useChatStore();
