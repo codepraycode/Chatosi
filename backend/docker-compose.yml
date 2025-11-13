@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chatosi-backend
+    ports:
+      - "8080:8080"
+    environment:
+      NODE_ENV: development
+      PORT: 8080
+      # Add your other env vars here
+    # depends_on:
+    #   - mongo
+
+  # mongo:
+  #   image: mongo:7
+  #   container_name: chatosi-mongo
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongo-data:/data/db
+
+volumes:
+  mongo-data:
